@@ -1,0 +1,267 @@
+{
+  "training_date": "2026-10-10T23:32:30.348738+00:00",
+  "dataset_size": 7015,
+  "dataset_split": {
+    "train_samples": 4910,
+    "val_samples": 1052,
+    "test_samples": 1053,
+    "total_samples": 7015
+  },
+  "feature_count": 35,
+  "feature_names": [
+    "url_length",
+    "hostname_length",
+    "path_length",
+    "query_length",
+    "fragment_length",
+    "is_https",
+    "has_ip_address",
+    "num_subdomains",
+    "num_dots_hostname",
+    "num_dots_url",
+    "num_hyphens_hostname",
+    "num_hyphens_url",
+    "num_underscores_url",
+    "num_slashes_url",
+    "num_at_signs",
+    "num_ampersands",
+    "num_exclamation",
+    "num_tilde",
+    "num_percent",
+    "num_digits_hostname",
+    "num_digits_url",
+    "digit_ratio_hostname",
+    "digit_ratio_url",
+    "has_port",
+    "is_url_shortener",
+    "num_suspicious_keywords",
+    "has_suspicious_keyword",
+    "hostname_has_digits",
+    "path_has_double_slash",
+    "has_encoded_chars",
+    "special_char_ratio",
+    "has_at_sign",
+    "tld_length",
+    "has_www",
+    "url_entropy"
+  ],
+  "is_synthetic_data": true,
+  "candidate_models_evaluated": [
+    "XGBoost",
+    "RandomForest",
+    "LogisticRegression"
+  ],
+  "per_model_validation_metrics": {
+    "XGBoost": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          304,
+          0
+        ],
+        [
+          0,
+          748
+        ]
+      ],
+      "classification_report": {
+        "0": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 304.0
+        },
+        "1": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 748.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1052.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1052.0
+        }
+      },
+      "cv_f1_scores": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "cv_f1_mean": 1.0
+    },
+    "RandomForest": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          304,
+          0
+        ],
+        [
+          0,
+          748
+        ]
+      ],
+      "classification_report": {
+        "0": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 304.0
+        },
+        "1": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 748.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1052.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1052.0
+        }
+      },
+      "cv_f1_scores": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "cv_f1_mean": 1.0
+    },
+    "LogisticRegression": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          304,
+          0
+        ],
+        [
+          0,
+          748
+        ]
+      ],
+      "classification_report": {
+        "0": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 304.0
+        },
+        "1": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 748.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1052.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1052.0
+        }
+      },
+      "cv_f1_scores": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "cv_f1_mean": 1.0
+    }
+  },
+  "best_model_name": "XGBoost",
+  "selection_rationale": "Selected XGBoost with validation F1-score of 1.0000 and recall of 1.0000 prioritizing high phishing catch rate.",
+  "validation_vs_test_performance": {
+    "validation": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "pr_auc": 1.0
+    },
+    "test": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "pr_auc": 1.0
+    }
+  },
+  "final_test_confusion_matrix": [
+    [
+      304,
+      0
+    ],
+    [
+      0,
+      749
+    ]
+  ],
+  "final_test_classification_report": {
+    "0": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 304.0
+    },
+    "1": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 749.0
+    },
+    "accuracy": 1.0,
+    "macro avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 1053.0
+    },
+    "weighted avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 1053.0
+    }
+  },
+  "limitations_and_caveats": [
+    "PROMINENT WARNING: This model was trained on SYNTHETIC demonstrative URL data. Performance metrics reflect synthetic distribution patterns and are not representative of production live threat evasion rates.",
+    "Lexical and structural features may not identify compromised legitimate domains without anomalous paths.",
+    "Newly registered zero-day malicious domains with valid SSL certificates may have low heuristic indicators.",
+    "Dynamic URL redirection services and JavaScript redirections require second-stage sandbox analysis."
+  ]
+}
