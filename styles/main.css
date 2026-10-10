@@ -1147,3 +1147,45 @@ table tbody tr td {
     font-size: 1.85rem;
   }
 }
+
+/* --------------------------------------------------------------------------
+   19. HERO SECTION & CONTRAST FIXES
+   -------------------------------------------------------------------------- */
+.hero-section {
+  background: linear-gradient(135deg, #0a1628 0%, #16243d 50%, #0d2137 100%) !important;
+  padding: 3.25rem 2.5rem !important;
+  border-radius: 16px !important;
+  text-align: center !important;
+  margin-bottom: 2rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(10, 22, 40, 0.12) !important;
+}
+
+.hero-section h1,
+.hero-section .hero-title,
+.hero-title {
+  color: #ffffff !important;
+  font-size: 2.8rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 0.5rem !important;
+  letter-spacing: -0.02em !important;
+}
+
+.hero-section p,
+.hero-section .hero-subtitle,
+.hero-subtitle {
+  color: #60a5fa !important;
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.hero-section .hero-description,
+.hero-description {
+  color: #e2e8f0 !important;
+  font-size: 1.02rem !important;
+  max-width: 720px !important;
+  margin: 0 auto !important;
+  line-height: 1.65 !important;
+}
+
