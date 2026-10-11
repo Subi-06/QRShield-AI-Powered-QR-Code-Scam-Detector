@@ -2,10 +2,19 @@
 
 A web application that enables users to inspect QR codes before visiting websites or executing UPI payments. Uses supervised machine learning for phishing URL detection and rule-based verification for UPI payment QR codes.
 
+[![Live Demo](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://qrshield-ai-powered-qr-code-scam-detector-n7reo5aecfbfmkc4xbyb.streamlit.app/)
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)
 ![XGBoost](https://img.shields.io/badge/XGBoost-2.0+-green.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+
+## Live Application
+
+The application is deployed live on Streamlit Community Cloud:
+**[Launch Live Demo](https://qrshield-ai-powered-qr-code-scam-detector-n7reo5aecfbfmkc4xbyb.streamlit.app/)**
+
+URL: `https://qrshield-ai-powered-qr-code-scam-detector-n7reo5aecfbfmkc4xbyb.streamlit.app/`
+
 
 ## Features
 
