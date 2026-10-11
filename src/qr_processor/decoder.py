@@ -294,21 +294,55 @@ class QRDecoder:
             )
 
         try:
-            # 1. Convert bytes to numpy array using cv2.imdecode
+            # 1. Convert bytes to numpy array using cv2.imdecode with UNCHANGED to keep alpha channel
             nparr = np.frombuffer(image_bytes, np.uint8)
-            image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            raw_img = cv2.imdecode(nparr, cv2.IMREAD_UNCHANGED)
 
-            if image is None or image.size == 0:
+            if raw_img is None or raw_img.size == 0:
                 return QRDecodeResult(
                     success=False,
                     error_message="Failed to decode image: unsupported format or corrupt image data.",
                 )
 
-            # 2. Convert to grayscale
+            # If PNG has alpha channel (4 channels), blend onto solid white background
+            if len(raw_img.shape) == 3 and raw_img.shape[2] == 4:
+                b, g, r, a = cv2.split(raw_img)
+                alpha_factor = a.astype(float) / 255.0
+                white_bg = np.ones_like(b, dtype=np.uint8) * 255
+                b_out = (b * alpha_factor + white_bg * (1.0 - alpha_factor)).astype(np.uint8)
+                g_out = (g * alpha_factor + white_bg * (1.0 - alpha_factor)).astype(np.uint8)
+                r_out = (r * alpha_factor + white_bg * (1.0 - alpha_factor)).astype(np.uint8)
+                image = cv2.merge([b_out, g_out, r_out])
+            elif len(raw_img.shape) == 3 and raw_img.shape[2] == 3:
+                image = raw_img
+            else:
+                image = cv2.cvtColor(raw_img, cv2.COLOR_GRAY2BGR)
+
+            # Convert to grayscale
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-            # 3-6. Execute decoding pipeline
-            return self._execute_decoding_pipeline(image=image, gray=gray)
+            # Run primary pipeline
+            res = self._execute_decoding_pipeline(image=image, gray=gray)
+            if res.success:
+                return res
+
+            # Fallback 1: Add white padding border (essential for tightly-cropped or transparent stock PNGs)
+            padded = cv2.copyMakeBorder(gray, 40, 40, 40, 40, cv2.BORDER_CONSTANT, value=[255, 255, 255])
+            padded_color = cv2.copyMakeBorder(image, 40, 40, 40, 40, cv2.BORDER_CONSTANT, value=[255, 255, 255])
+            res_padded = self._execute_decoding_pipeline(image=padded_color, gray=padded)
+            if res_padded.success:
+                return res_padded
+
+            # Fallback 2: Resize up/down if image is very small or very large
+            h, w = gray.shape[:2]
+            if max(h, w) < 300:
+                scale_up = cv2.resize(padded, (w * 3, h * 3), interpolation=cv2.INTER_NEAREST)
+                scale_color = cv2.resize(padded_color, (w * 3, h * 3), interpolation=cv2.INTER_NEAREST)
+                res_scaled = self._execute_decoding_pipeline(image=scale_color, gray=scale_up)
+                if res_scaled.success:
+                    return res_scaled
+
+            return res
 
         except Exception as e:
             logger.error("Unexpected error in decode_from_image: %s", e, exc_info=True)

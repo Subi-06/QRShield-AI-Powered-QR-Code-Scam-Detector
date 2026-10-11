@@ -168,6 +168,26 @@ def main() -> None:
             if camera_frame is not None:
                 image_bytes = camera_frame.getvalue()
 
+        # Quick Test Samples
+        st.markdown("<hr style='margin: 1.25rem 0; border: none; border-top: 1px solid #e2e8f0;'>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size: 0.85rem; font-weight: 700; color: #475569; margin-bottom: 0.5rem;'>Quick Test Examples:</div>", unsafe_allow_html=True)
+        q1, q2, q3 = st.columns(3)
+        with q1:
+            if st.button("Fake Phish QR", use_container_width=True):
+                sample_p = project_root / "assets" / "sample_qrs" / "fake_phishing_qr.png"
+                if sample_p.exists():
+                    image_bytes = sample_p.read_bytes()
+        with q2:
+            if st.button("Safe Link QR", use_container_width=True):
+                sample_s = project_root / "assets" / "sample_qrs" / "safe_website_qr.png"
+                if sample_s.exists():
+                    image_bytes = sample_s.read_bytes()
+        with q3:
+            if st.button("UPI Pay QR", use_container_width=True):
+                sample_u = project_root / "assets" / "sample_qrs" / "upi_payment_qr.png"
+                if sample_u.exists():
+                    image_bytes = sample_u.read_bytes()
+
         st.markdown("""
         <div style="text-align: center; color: #94a3b8; font-size: 0.85rem; margin-top: 1rem;">
             Supported formats: PNG, JPG, JPEG (Max 5 MB)
