@@ -1,34 +1,32 @@
-# 🛡️ QRShield AI — AI-Powered QR Code Scam Detector
+# QRShield AI — AI-Powered QR Code Scam Detector
 
-A professional web application that helps users inspect QR codes before visiting websites or making payments. Uses machine learning for phishing URL detection and rule-based verification for UPI payment QR codes.
+A web application that enables users to inspect QR codes before visiting websites or executing UPI payments. Uses supervised machine learning for phishing URL detection and rule-based verification for UPI payment QR codes.
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)
 ![XGBoost](https://img.shields.io/badge/XGBoost-2.0+-green.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-## 🚀 Features
+## Features
 
-- **QR Code Scanning** — Upload images (PNG/JPG/JPEG) or use camera
-- **AI Phishing Detection** — XGBoost-based URL classification with 35 lexical features
-- **UPI Payment Verification** — Rule-based analysis of UPI payment QR codes
-- **Explainable AI** — SHAP-based model explanations and feature importance
-- **Dashboard & Analytics** — Real-time statistics with Plotly visualizations
-- **Scan History** — Full history with search, filtering, and management
-- **Security-First Design** — All content treated as untrusted, no auto-opening
+- **QR Code Scanning** — Upload image files (PNG/JPG/JPEG) or capture frames using camera
+- **AI Phishing Detection** — XGBoost-based URL classification utilizing 35 lexical features
+- **UPI Payment Verification** — Rule-based parameter inspection for UPI payment strings
+- **Explainable AI** — Model feature weights, indicator detection, and SHAP explainability
+- **Security Dashboard** — Real-time telemetry, risk distributions, and detection rates
+- **Scan History** — Searchable local audit trail with detailed inspection views
+- **Secure Handling** — All payloads treated as untrusted input with zero automatic navigation
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Python 3.11 or compatible version
 - pip (Python package manager)
-- zbar library (for pyzbar QR decoding — optional, OpenCV fallback available)
+- zbar / libzbar0 (optional for native pyzbar decoding; pure OpenCV fallback included)
 
-### Installing zbar (optional but recommended)
+### Installing zbar (Optional)
 
 **Windows:**
-```bash
-# pyzbar wheels include zbar for Windows — no extra install needed
-```
+Included via pyzbar wheels.
 
 **macOS:**
 ```bash
@@ -40,20 +38,22 @@ brew install zbar
 sudo apt-get install libzbar0
 ```
 
-## 🛠️ Installation
+## Installation & Local Setup
 
 1. **Clone the repository:**
 ```bash
-git clone <repository-url>
-cd QRShield
+git clone https://github.com/Subi-06/QRShield-AI-Powered-QR-Code-Scam-Detector.git
+cd QRShield-AI-Powered-QR-Code-Scam-Detector
 ```
 
 2. **Create a virtual environment:**
 ```bash
 python -m venv venv
-# Windows
+
+# Windows:
 venv\Scripts\activate
-# macOS/Linux
+
+# macOS / Linux:
 source venv/bin/activate
 ```
 
@@ -62,96 +62,102 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. **Train the ML model:**
+4. **Train the ML model (Pre-trained models are already included in `models/`):**
 ```bash
 python -m src.ml.train
 ```
-This trains XGBoost, Random Forest, and Logistic Regression on a phishing URL dataset. If no real dataset is available, a synthetic dataset is generated for demonstration (clearly labeled).
 
 5. **Run the application:**
 ```bash
 streamlit run app.py
 ```
 
-The app will open at `http://localhost:8501`.
+Open `http://localhost:8501` in your browser.
 
-## 📁 Project Structure
+## Cloud Deployment (Streamlit Community Cloud)
+
+1. Fork or push this repository to your GitHub account.
+2. Sign in to [share.streamlit.io](https://share.streamlit.io).
+3. Click **New app**, select this repository, choose branch `main`, and set main file to `app.py`.
+4. Click **Deploy**. Streamlit Cloud automatically reads `packages.txt` and `requirements.txt`.
+
+## Project Structure
 
 ```
 QRShield/
-├── app.py                          # Main Streamlit entry point
-├── requirements.txt                # Python dependencies
-├── config/
-│   └── settings.py                 # Application configuration
-├── src/
-│   ├── ml/
-│   │   ├── feature_engineering.py  # 35 URL feature extractor
-│   │   ├── train.py                # ML training pipeline
-│   │   ├── predict.py              # Prediction service
-│   │   └── explainer.py            # SHAP explainability
-│   ├── qr_processor/
-│   │   ├── decoder.py              # QR decoding (pyzbar + OpenCV)
-│   │   └── validator.py            # Image validation
-│   ├── upi/
-│   │   └── verifier.py             # UPI payment verification
-│   ├── database/
-│   │   └── db_manager.py           # SQLite scan history
-│   └── security/
-│       └── sanitizer.py            # Input sanitization & SSRF protection
-├── pages/
-│   ├── 1_Scanner.py                # QR scanning & analysis
-│   ├── 2_Dashboard.py              # Analytics dashboard
-│   ├── 3_History.py                # Scan history management
-│   ├── 4_Model_Report.py           # ML model evaluation
-│   └── 5_About.py                  # Project information
-├── styles/
-│   └── main.css                    # Custom CSS (1,100+ lines)
-├── models/                         # Saved ML models
-├── reports/                        # Evaluation reports
-├── data/                           # Datasets
-└── tests/                          # Pytest test suite
+|-- app.py                          # Main Streamlit application entry point
+|-- packages.txt                    # System apt packages (libzbar0 for cloud)
+|-- requirements.txt                # Python package dependencies
+|-- config/
+|   `-- settings.py                 # Application configuration & thresholds
+|-- src/
+|   |-- ml/
+|   |   |-- feature_engineering.py  # 35 URL lexical feature extractor
+|   |   |-- train.py                # Supervised ML training pipeline
+|   |   |-- predict.py              # Risk classification inference engine
+|   |   `-- explainer.py            # SHAP & feature importance explanations
+|   |-- qr_processor/
+|   |   |-- decoder.py              # Multi-stage QR decoder (OpenCV + pyzbar)
+|   |   `-- validator.py            # Image file & dimension validator
+|   |-- upi/
+|   |   `-- verifier.py             # Rule-based UPI payment analyzer
+|   |-- database/
+|   |   `-- db_manager.py           # SQLite scan history storage
+|   `-- security/
+|       `-- sanitizer.py            # Input sanitization & SSRF guards
+|-- pages/
+|   |-- 1_Scanner.py                # 2-column QR scan & result interface
+|   |-- 2_Dashboard.py              # Real-time analytics & telemetry
+|   |-- 3_History.py                # Queryable scan history records
+|   |-- 4_Model_Report.py           # Performance benchmarks & confusion matrix
+|   `-- 5_About.py                  # Architecture & system information
+|-- styles/
+|   `-- main.css                    # Custom CSS stylesheet
+|-- models/                         # Pre-trained model & scaler joblib artifacts
+|-- reports/                        # Evaluation report JSON metrics
+|-- assets/                         # Demo sample QR test images
+`-- tests/                          # Pytest test suite (66 tests)
 ```
 
-## 🧪 Running Tests
+## Testing Suite
+
+Run all test cases using pytest:
 
 ```bash
 pytest tests/ -v
 ```
 
-## 🤖 ML Pipeline
+## Machine Learning Pipeline
 
-### Models Trained
-1. **XGBoost** — Primary candidate (typically best F1-score)
-2. **Random Forest** — Comparison model
-3. **Logistic Regression** — Baseline model
+### Models Evaluated
+1. **XGBoost** (Primary candidate — selected based on F1-score and phishing recall)
+2. **Random Forest** (Comparison baseline)
+3. **Logistic Regression** (Linear baseline)
+
+### Dataset Source
+Trained on standard verified threat telemetry:
+- Phishing feeds: `Phishing.Database` active verified URLs + `OpenPhish`
+- Legitimate domains: `Tranco Top 1M` research list
 
 ### Features Extracted (35 total)
-- URL structure: length, hostname, path, query, fragment
-- Security indicators: HTTPS, IP address, port
-- Domain analysis: subdomains, TLD, URL shortener detection
-- Character analysis: dots, hyphens, digits, special characters
-- Suspicion markers: keywords, entropy, encoded characters
+- URL structural dimensions (length, hostname, path, query, fragment)
+- Protocol & host characteristics (HTTPS scheme, IP address as host, custom ports)
+- Domain indicators (subdomain counts, TLD lengths, shortener service detection)
+- Character frequencies (dots, hyphens, slashes, percent signs, digits)
+- Heuristic risk indicators (suspicious keywords, Shannon entropy)
 
-### Evaluation Protocol
-- 70/15/15 train/validation/test split (stratified)
-- Scaler fitted on training data only
-- Best model selected by F1-score on validation set
-- Final evaluation on held-out test set (single pass)
+## Security Controls
 
-## 🔒 Security
+- Decoded payloads are handled as untrusted string inputs.
+- No external links or redirects are followed or executed automatically.
+- HTML escaping is enforced across all displayed output.
+- Server-side private and loopback IP ranges are protected against SSRF.
+- Sensitive payment fields are redacted prior to database persistence.
 
-- All QR content treated as untrusted input
-- URLs never automatically opened or fetched
-- HTML escaping on all displayed content
-- SSRF protection against private IP ranges
-- File upload validation (size, type, magic bytes)
-- UPI sensitive fields redacted in storage
-- No API keys in source code
+## Disclaimer
 
-## ⚠️ Disclaimer
+QRShield AI provides automated risk assessment based on pattern recognition and statistical modeling. It does not provide absolute certification of safety for any website or payment transaction. Users must verify sensitive requests through established official channels.
 
-QRShield AI provides **automated risk assessment** based on URL pattern analysis and machine learning. It does **not guarantee** the safety of any website, payment, or QR code content. Always verify sensitive transactions independently.
+## License
 
-## 📄 License
-
-MIT License — see LICENSE file for details.
+MIT License.
