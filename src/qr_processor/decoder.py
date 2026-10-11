@@ -8,7 +8,13 @@ from dataclasses import dataclass
 import logging
 from typing import List, Optional
 
-import cv2
+try:
+    import cv2
+    CV2_AVAILABLE = True
+except ImportError:
+    cv2 = None
+    CV2_AVAILABLE = False
+
 import numpy as np
 
 # Configure module logger
@@ -45,7 +51,7 @@ class QRDecoder:
 
     def __init__(self) -> None:
         """Initialize OpenCV QRCodeDetector and internal state."""
-        self._cv_detector = cv2.QRCodeDetector()
+        self._cv_detector = cv2.QRCodeDetector() if (CV2_AVAILABLE and cv2 is not None) else None
 
     @staticmethod
     def detect_content_type(content: str) -> str:
