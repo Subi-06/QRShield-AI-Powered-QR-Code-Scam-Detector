@@ -44,9 +44,10 @@ ENV/
 *.sqlite
 *.sqlite3
 
-# Project specific data and models
+# Project specific data
 data/raw/
-models/*.joblib
+data/processed/phishing_dataset.csv
+
 
 # Testing & Coverage
 .pytest_cache/
